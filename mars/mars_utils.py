@@ -95,6 +95,10 @@ XLOG_COPY_HEADER_FILES = {
     "mars/xlog/xlogger_interface.h": "xlog",
 }
 
+XLOG_COPY_MOOUDLE_MAP_FILES = {
+    "mars/modulemap/module.modulemap":"Modules",
+    "mars/modulemap/mars_xlog_header.h":""
+}
 
 class bcolors:
     HEADER = '\033[95m'
@@ -300,6 +304,16 @@ def make_static_framework(src_lib, dst_framework, header_file_mappings, header_f
     for (src, dst) in header_file_mappings.items():
         copy_file(os.path.join(header_files_src_base, src),
                   os.path.join(framework_path, dst, src[src.rfind("/") + 1:]))
+
+    #Copy Module Map
+    for (src,dst) in XLOG_COPY_MOOUDLE_MAP_FILES.items():
+        if dst == "Modules":
+            copy_file(os.path.join(header_files_src_base, src),
+                  os.path.join(dst_framework, dst, src[src.rfind("/") + 1:]))
+        else:
+            copy_file(os.path.join(header_files_src_base, src),
+                  os.path.join(framework_path, dst, src[src.rfind("/") + 1:]))
+    
 
     return True
 
